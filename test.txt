@@ -1,0 +1,3 @@
+Hello, World!
+
+Das TCP verfahren ist interessant, sobald ein Gerät mit einem anderen Kommunizieren will wird ein 3-Schritt Handshake aufgebaut. Es wird geprüft ob beide Seiten erreichbar & bereit sind. Reinfolge: ACK ,ACK SYNC, ACK 

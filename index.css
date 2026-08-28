@@ -1,0 +1,224 @@
+* {
+    box-sizing: border-box;
+}
+.darkmode{
+     background:
+        radial-gradient(circle at 20% 10%, #383c41 0%, transparent 35%),
+        radial-gradient(circle at 80% 90%, #332e38 0%, transparent 35%),
+        #0e0e0e;
+}
+.whitemode{
+     background:
+        radial-gradient(circle at 20% 10%, #dbeafe 0%, transparent 35%),
+        radial-gradient(circle at 80% 90%, #e9d5ff 0%, transparent 35%),
+        #f5f5f7;
+}
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                 "SF Pro Text", Arial, sans-serif;
+    background:
+        radial-gradient(circle at 20% 10%, #dbeafe 0%, transparent 35%),
+        radial-gradient(circle at 80% 90%, #e9d5ff 0%, transparent 35%),
+        #f5f5f7;
+    color: #1d1d1f;
+    padding: 60px 20px;
+}
+
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#infomation {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+
+    max-width: 300px;
+    max-height: 300px;
+
+    padding: 10px;
+
+    transition: all 0.25s ease;
+}
+
+#infomation:hover {
+    transform: scale(1.05);
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+}
+.darkmode-text{
+    background: linear-gradient(
+        90deg,
+        #fcfcfc,
+        #c5c5c5
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.whitemode-text{
+    background: linear-gradient(
+        90deg,
+        #111,
+        #666
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+h1 {
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: -2px;
+    margin: 0px 0px 0px;
+    padding: 0px;
+
+    background: linear-gradient(
+        90deg,
+        #111,
+        #666
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    animation: fadeUp 0.7s ease;
+}
+p
+{
+   
+}
+
+
+input {
+    width: min(600px, 90vw);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    outline: none;
+
+    padding: 16px 20px;
+    margin: 6px;
+
+    border-radius: 18px;
+
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.06),
+        inset 0 1px rgba(255, 255, 255, 0.8);
+
+    font-size: 16px;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+input:focus {
+    background: rgba(255, 255, 255, 0.8);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.1),
+        0 0 0 3px rgba(0, 122, 255, 0.15);
+}
+
+/* File Input */
+
+input[type="file"] {
+    cursor: pointer;
+}
+
+
+
+
+button {
+    border: none;
+    outline: none;
+
+    padding: 14px 24px;
+    margin: 15px;
+
+    border-radius: 999px;
+
+    background: #007aff;
+    color: white;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 25px rgba(0, 122, 255, 0.25);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 30px rgba(0, 122, 255, 0.35);
+
+    filter: brightness(1.05);
+}
+
+button:active {
+    transform: scale(0.96);
+}
+
+
+#list {
+    width: min(900px, 95vw);
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(260px, 1fr)
+    );
+
+    gap: 20px;
+}
+
+
+.card {
+    padding: 25px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    box-shadow:0 15px 40px rgba(0, 0, 0, 0.08), inset 0 1px rgba(255, 255, 255, 0.8);
+    animation: cardIn 0.45s cubic-bezier(.2,.8,.2,1);
+    transition:transform 0.3s ease,box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+}
+
+.card h2 {
+    margin-top: 0;
+    font-size: 24px;
+    letter-spacing: -0.5px;
+}
+
+.card p {
+    color: #555;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+

@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <script src="dings.js" defer></script>
+        <link rel="stylesheet" href="index.css">
+    </head>
+
+    <body>
+        <h1 id="titelText">Notizen im Web!</h1>
+        <p id="untertitel"><a href="https://github.com/MONYtry">Made by MONY</a></p>
+        <button onclick="saveJSON()">💾 Speichern</button>
+        
+        <div id="infomation">
+            <b>ℹ️</b>
+
+            <div>
+                <h3>Info - Hilfe</h3>
+                <p></p>
+            </div>
+        </div>
+
+        <button onclick="set_colorMode()" id="switchButton">☀️</button>
+            
+        <input type="text" id="inputfield_titel" placeholder="Überschrift...">
+        <input type="text" id="inputfield_message" placeholder="Nachricht...">
+        <input type="file" id="file" accept=".txt,.md" placeholder="Nachricht...">
+        <input type="file" id="jsonFile" accept=".json" placeholder="Nachricht...">
+        <button onclick="loadJSON()">Lad Json</button>
+
+
+        <button onclick="add_notiz()">Notiz anhängen!</button>
+
+        <div id="list"></div>
+        
+    </body>
+</html>
