@@ -33,42 +33,52 @@ async function add_notiz()
     {
         return;
     }
-    const file = raw_file_message.files[0];
-    if (file)
-    {
-        const text = await file.text();
-        console.log("Inhalt von " + raw_file_message.value +": "+ text);
-        message = text;
-    }
+    
+    message = await createFile(raw_file_message);
+    
+    // Setzt Daten in den Notizen Array
+    notizen.push({
+        id: Date.now(),
+        titel: titel,
+        message: message
+    });
     // Fügt Class-Namen hinzu
     div.className = "card";
     
     // Inhalt
     div.innerHTML = `
-        <h2>` + titel + `</h2>` +
-        `<p>` + message + `</p>` +
-        `<button>Mehr Infos</button>`
+        <h2>${titel}</h2>` +
+        `<p>${message}</p>` +
+        `<button onclick="removeNotiz(${notizen[notizen.length - 1].id},this)">Mehr Infos</button>`
     
     // Fügt bei der angebenen ID ein DIV hinzu
     document.getElementById(id_to_use).appendChild(div);
     
+    
 
-    const notiz =
-    {
-        titel: titel,
-        message: message
-    };
-    notizen.push({
-        titel: titel,
-        message: message
-    });
-
-    // Reset
+    // Reset von Values
     raw_titel.value = null;
     raw_message.value = null;
     raw_file_message.value = null;
-    
+}
 
+async function createFile(raw_file_message)
+{
+    // Holt sich nur die erste File
+    const file = raw_file_message.files[0];
+    
+    if (file)
+    {
+        // Wartet auf den Text
+        const text = await file.text();
+        
+        // Debuging
+        if (Debug_Mode) console.log("Inhalt von " + raw_file_message.value +": "+ text);
+        
+        return text;
+    }
+    return null;
+    
 }
 
 function saveJSON()
@@ -98,6 +108,82 @@ function saveJSON()
     URL.revokeObjectURL(url);
 }
 
+
+async function loadJSON()
+{
+    // Holt sich das Inputfield
+    const fileInput = document.getElementById("jsonFile");
+    
+    // Holt sich NUR die erste Datei
+    const file = fileInput.files[0];
+    
+    // Nullpointer vermeiden
+    if (!file)
+    {
+        console.error("Es wurde keine JSON zum importieren gefunden, abbruch!");
+        return; 
+    }
+    
+    try
+    {
+        // Wartet auf den Text
+        const text = await file.text();
+        // Packt den Text in den Array
+        notizen = JSON.parse(text);
+        
+        document.getElementById(id_to_use).innerHTML = "";
+        
+        // Geht durch jede Notiz (von JSON)
+        // Fügt die neue Notiz hinzu
+        for (const notiz of notizen)
+        {
+            // Erstellt das Element
+            const div = document.createElement("div");
+
+            // Fügt Class-Namen hinzu
+            div.className = "card";
+            
+            // Inhalt
+            div.innerHTML = `
+                <h2> ${notiz.titel}</h2>` +
+                `<p> ${notiz.message}</p>` +
+                `<button onclick="removeNotiz(${notizen[notizen.length - 1].id},this)">Mehr Infos</button>`
+            
+            // Fügt bei der angebenen ID ein DIV hinzu
+            document.getElementById(id_to_use).appendChild(div);
+        }
+
+        if (Debug_Mode) console.log(notizen); 
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
+}
+
+
+
+function removeNotiz(id,button)
+{
+    // Sucht nach der geben ID
+    notizen = notizen.filter(notiz => notiz.id !== id)
+
+    // Karte visuell entfernen
+    button.parentElement.remove();
+
+    // Unwichtig
+    if (Debug_Mode)
+    {
+        console.info("Karte wurde erfolgreich entfernt");
+        if (notizen.length != 0) 
+        {
+            console.log(notizen);
+            return;
+        }
+        console.info("Es exisitieren nun keine Notizen mehr!")
+    }
+}
+
 function killERRORS(titel, message, file) {
 
     // Titel muss immer vorhanden sein
@@ -114,52 +200,13 @@ function killERRORS(titel, message, file) {
     return true;
 }
 
-
-async function loadJSON()
+function current_Time() 
 {
-    const fileInput = document.getElementById("jsonFile");
-    const file = fileInput.files[0];
-
-    if (!file)
-    {
-        console.error("Es wurde keine JSON zum importieren gefunden, abbruch!");
-        return; 
-    }
-    
-    try
-    {
-        const text = await file.text();
-        notizen = JSON.parse(text);
-
-        document.getElementById(id_to_use).innerHTML = "";
-
-        for (const notiz of notizen)
-        {
-            const div = document.createElement("div");
-
-            // Fügt Class-Namen hinzu
-            div.className = "card";
-            
-            // Inhalt
-            div.innerHTML = `
-                <h2> ${notiz.titel}</h2>` +
-                `<p> ${notiz.message}</p>` +
-                `<button>Mehr Infos</button>`
-            
-            // Fügt bei der angebenen ID ein DIV hinzu
-            document.getElementById(id_to_use).appendChild(div);
-        }
-
-        if (Debug_Mode) console.log(json); 
-    }
-
-    catch(error)
-    {
-        console.log(error);
-    }
-}
-function current_Time() {
+    // Erstellt ein Datums-Objekt
     const jetzt = new Date();
+
+    // Holt sich die akutelle Stunde
+    // Basiert auf das oben erstellte Datums-Objekt
     const stunde = jetzt.getHours();
 
     switch (stunde) {
@@ -185,8 +232,11 @@ function current_Time() {
     set_colorMode();
 }
 
+
 // Kleiner Darkmode Switcher
 function set_colorMode() {
+    
+    // Holt sich alle Elemente
     const titel = document.getElementById("titelText");
     const untertitel = document.getElementById("untertitel");
     const button = document.getElementById("switchButton");
@@ -223,4 +273,5 @@ function set_colorMode() {
     }
 }
 
+// Holt sich die aktuelle Zeit!
 current_Time();
