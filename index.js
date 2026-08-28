@@ -34,6 +34,7 @@ async function add_notiz()
         return;
     }
     
+    // Wenn eine Datei angehangen wurde -> Nachricht erstetzen durch Datei
     if (raw_file_message.files[0])
     {
         message = await createFile(raw_file_message);
@@ -58,7 +59,6 @@ async function add_notiz()
     // Fügt bei der angebenen ID ein DIV hinzu
     document.getElementById(id_to_use).appendChild(div);
     
-    
 
     // Reset von Values
     raw_titel.value = null;
@@ -81,8 +81,7 @@ async function createFile(raw_file_message)
         
         return text;
     }
-    return "";
-    
+    return "Ein unbekannter Fehler ist Aufgetreten! (siehe Console)";
 }
 
 function saveJSON()
@@ -175,7 +174,7 @@ function removeNotiz(id,button)
     // Karte visuell entfernen
     button.parentElement.remove();
 
-    // Unwichtig
+    // Debug logs
     if (Debug_Mode)
     {
         console.info("Karte wurde erfolgreich entfernt");
@@ -271,7 +270,8 @@ function set_colorMode() {
 
 
         button.textContent = "☀️";
-
+        
+        // Debug log
         if (Debug_Mode) console.log("Darkmode: "+ darkmode);
         darkmode = true;
     }
