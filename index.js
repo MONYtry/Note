@@ -34,7 +34,11 @@ async function add_notiz()
         return;
     }
     
-    message = await createFile(raw_file_message);
+    if (raw_file_message.files[0])
+    {
+        message = await createFile(raw_file_message);
+    }
+    
     
     // Setzt Daten in den Notizen Array
     notizen.push({
@@ -77,7 +81,7 @@ async function createFile(raw_file_message)
         
         return text;
     }
-    return null;
+    return "";
     
 }
 
@@ -147,7 +151,7 @@ async function loadJSON()
             div.innerHTML = `
                 <h2> ${notiz.titel}</h2>` +
                 `<p> ${notiz.message}</p>` +
-                `<button onclick="removeNotiz(${notizen[notizen.length - 1].id},this)">Mehr Infos</button>`
+        `<button onclick="removeNotiz(${notizen[notizen.length - 1].id},this)">Mehr Infos</button>`
             
             // Fügt bei der angebenen ID ein DIV hinzu
             document.getElementById(id_to_use).appendChild(div);
@@ -233,7 +237,7 @@ function current_Time()
 }
 
 
-// Kleiner Darkmode Switcher
+
 function set_colorMode() {
     
     // Holt sich alle Elemente
